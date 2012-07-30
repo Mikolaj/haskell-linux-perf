@@ -234,7 +234,7 @@ profileeProcess options command args = do
    t <- getTimeOfDay
    print t
    -- run the command to be profiled
-   executeFile command True args Nothing
+   executeFile command True (concatMap words args) Nothing
 
 -- Attach "perf record" to the profilee process ID.
 perfProcess :: Options -> ProcessID -> IO ()
