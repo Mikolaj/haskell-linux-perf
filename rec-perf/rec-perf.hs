@@ -57,6 +57,7 @@ import System.Directory
    (findExecutable, getPermissions, executable, doesFileExist)
 import System.FilePath (splitFileName)
 import GetTimeOfDay (getTimeOfDay)
+import System.Posix.Clock
 
 main :: IO ()
 main = do
@@ -231,7 +232,8 @@ profileeProcess options command args = do
    -- wait for a short time to allow perf to start recording this process
    threadDelay $ options_wait options 
    -- call gettimeofday to synchronise times
-   t <- getTimeOfDay
+--   t <- getTimeOfDay
+   t <- getTime Monotonic  -- Realtime
    print t
    -- run the command to be profiled
    executeFile command True args Nothing
@@ -284,7 +286,9 @@ defaultEvents =
     "raw_syscalls:sys_enter",
     "raw_syscalls:sys_exit", 
     "syscalls:sys_enter_gettimeofday",
-    "syscalls:sys_exit_gettimeofday"
+    "syscalls:sys_exit_gettimeofday",
+    "syscalls:sys_enter_clock_gettime",
+    "syscalls:sys_exit_clock_gettime"
    ]
 
 -- Given two lists [a, b, c ..] [d, e, f ..]

@@ -121,7 +121,8 @@ Executable rec-perf {
   Build-depends: base==4.*,
                  unix==2.5.*,
                  directory==1.1.*,
-                 filepath==1.2.*
+                 filepath==1.2.*,
+                 clock==0.2.*
   other-modules: GetTimeOfDay
 }
 
