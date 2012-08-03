@@ -284,8 +284,10 @@ defaultEvents =
     "raw_syscalls:sys_enter",
     "raw_syscalls:sys_exit", 
     "syscalls:sys_enter_gettimeofday",
-    "syscalls:sys_exit_gettimeofday"
-   ]
+    "syscalls:sys_exit_gettimeofday",
+    "syscalls:sys_enter_getpid",
+    "syscalls:sys_exit_getpid"
+  ]
 
 -- Given two lists [a, b, c ..] [d, e, f ..]
 -- return a single list by alternating elements from

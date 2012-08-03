@@ -13,12 +13,7 @@ import Foreign.C.Types (CInt, CLong)
 -- | Return the current time, in microseconds since Jan. 1, 1970.
 
 getTimeOfDay :: IO Integer
-getTimeOfDay = do
-    tv <- with (CTimeval 0 0) $ \tvptr -> do
-        throwErrnoIfMinus1_ "gettimeofday" (gettimeofday tvptr nullPtr)
-        peek tvptr
-    let !t = (fromIntegral (sec tv) * 1000000) + fromIntegral (usec tv)
-    return t
+getTimeOfDay = gettimeofday >>= return . fromIntegral
 
 ------------------------------------------------------------------------
 -- FFI binding
@@ -41,5 +36,4 @@ instance Storable CTimeval where
         #{poke struct timeval, tv_sec} ptr (sec tv)
         #{poke struct timeval, tv_usec} ptr (usec tv)
 
-foreign import ccall unsafe "sys/time.h gettimeofday" gettimeofday
-    :: Ptr CTimeval -> Ptr () -> IO CInt
+foreign import ccall unsafe "sys/types.h getpid" gettimeofday :: IO CInt
